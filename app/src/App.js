@@ -1,5 +1,14 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Navigation from './component/Navigation';
+import Navigation from './component/Navigation/Navigation';
+import AboutPage from './Page/AboutPage/AboutPage';
+import AdminPage from './Page/AdminPage/AdminPage';
+import Chartbox from './Page/ChartBoxPage/Chartbox';
+import DashboardPage from './Page/DashboardPage/DashboardPage';
+import HomePage from './Page/HomePage/HomePage';
+import LendingPage from './Page/LendingPage/LendingPage';
+import PageNotFound from './Page/NotFoundPage/PageNotFound';
+import TimeLinePage from './Page/TimelinePage/TimeLinePage';
+import UserInfoPage from './Page/userInfoPage/UserInfoPage';
 
 const App = () => {
   return (
@@ -8,15 +17,15 @@ const App = () => {
 
       <Navigation />
       <Routes>
-        <Route index element={<h1>Lending page</h1>} />
-        <Route path="home" element={<h1>home page</h1>} />
-        <Route path="dashboard" element={<h1>Dashboard page</h1>} />
-        <Route path="about" element={<h1>about page</h1>} />
-        <Route path="chartbox" element={<h1>chartbox page</h1>} />
-        <Route path="admin" element={<h1>admin page</h1>} />
-        <Route path="timeline" element={<h1>timeline page</h1>} />
-        <Route path="userinfo" element={<h1>userinfo page</h1>} />
-        <Route path="*" element={<p>Oops 404!</p>} />
+        <Route index element={<LendingPage />} />
+        <Route path="home" element={<HomePage />} />
+        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="chartbox" element={<Chartbox />} />
+        <Route path="admin" element={<AdminPage />} />
+        <Route path="timeline" element={<TimeLinePage />} />
+        <Route path="userinfo" element={<UserInfoPage />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );
