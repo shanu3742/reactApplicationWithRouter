@@ -12,50 +12,62 @@ import PageNotFound from './Page/NotFoundPage/PageNotFound';
 import TimeLinePage from './Page/TimelinePage/TimeLinePage';
 import UserInfoPage from './Page/userInfoPage/UserInfoPage';
 
-export const ApplicationContext = React.createContext();
-
 const App = () => {
   const [user, setUser] = React.useState(null);
+  const [selectUser, setSelectUser] = React.useState(false);
 
-  const handleLogin = () => setUser({ id: '1', name: 'robin' });
+  const handleLogin = () => setSelectUser(true);
   const handleLogout = () => setUser(null);
-
+  // setUser({ id: '1', name: 'robin' }
+  const setFirstUser = () => {
+    setUser({ id: '1', name: 'robin', isAdmin: false });
+    setSelectUser(false);
+  };
+  const setSecondUser = () => {
+    setUser({ id: '1', name: 'robin', isAdmin: true });
+    setSelectUser(false);
+  };
   return (
-    <ApplicationContext.Provider value={user}>
-      <BrowserRouter>
-        <h1>React Router</h1>
-        {!user ? (
-          <button onClick={handleLogin}>Login</button>
-        ) : (
-          <button onClick={handleLogout}>Logout</button>
-        )}
+    <BrowserRouter>
+      <h1>React Router</h1>
+      {!user ? (
+        <button onClick={handleLogin}>Login</button>
+      ) : (
+        <button onClick={handleLogout}>Logout</button>
+      )}
 
-        <Navigation />
-        <Routes>
-          <Route index element={<LendingPage />} />
-          <Route path="home" element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="landing" element={<LendingPage />} />
+      {selectUser && (
+        <div>
+          <button onClick={setFirstUser}>user1</button>
+          <button onClick={setSecondUser}>user2</button>
+        </div>
+      )}
 
-          <Route element={<ProtectedRoutes />}>
-            <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="chartbox" element={<Chartbox />} />
-            <Route path="timeline" element={<TimeLinePage />} />
-            <Route path="userinfo" element={<UserInfoPage />} />
-          </Route>
+      <Navigation />
+      <Routes>
+        <Route index element={<LendingPage />} />
+        <Route path="home" element={<HomePage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="landing" element={<LendingPage />} />
 
-          <Route
-            path="admin"
-            element={
-              <ProtectedRoutes>
-                <AdminPage />
-              </ProtectedRoutes>
-            }
-          />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </ApplicationContext.Provider>
+        <Route element={<ProtectedRoutes isAllowed={!!user} />}>
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="chartbox" element={<Chartbox />} />
+          <Route path="timeline" element={<TimeLinePage />} />
+          <Route path="userinfo" element={<UserInfoPage />} />
+        </Route>
+
+        <Route
+          path="admin"
+          element={
+            <ProtectedRoutes isAllowed={!!user && user.isAdmin}>
+              <AdminPage />
+            </ProtectedRoutes>
+          }
+        />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
