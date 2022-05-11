@@ -1,15 +1,15 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { ApplicationContext } from '../../App';
 
-const ProtectedRoutes = ({ children }) => {
+const ProtectedRoutes = ({ defaultPath = '/landing', children }) => {
   const user = React.useContext(ApplicationContext);
   // Admin  page can't be access by any useer so we use protect routes here
   if (!user) {
-    return <Navigate to="/landing" replace />;
+    return <Navigate to={defaultPath} replace />;
   }
 
-  return <>{children}</>;
+  return <>{!children ? <Outlet /> : children}</>;
 };
 
 export default ProtectedRoutes;

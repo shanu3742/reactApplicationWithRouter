@@ -34,45 +34,21 @@ const App = () => {
         <Routes>
           <Route index element={<LendingPage />} />
           <Route path="home" element={<HomePage />} />
-          <Route path="landing" element={<LendingPage />} />
-          <Route
-            path="dashboard"
-            element={
-              <ProtectedRoutes>
-                <DashboardPage />
-              </ProtectedRoutes>
-            }
-          />
           <Route path="about" element={<AboutPage />} />
-          <Route
-            path="chartbox"
-            element={
-              <ProtectedRoutes>
-                <Chartbox />
-              </ProtectedRoutes>
-            }
-          />
+          <Route path="landing" element={<LendingPage />} />
+
+          <Route element={<ProtectedRoutes />}>
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="chartbox" element={<Chartbox />} />
+            <Route path="timeline" element={<TimeLinePage />} />
+            <Route path="userinfo" element={<UserInfoPage />} />
+          </Route>
+
           <Route
             path="admin"
             element={
               <ProtectedRoutes>
                 <AdminPage />
-              </ProtectedRoutes>
-            }
-          />
-          <Route
-            path="timeline"
-            element={
-              <ProtectedRoutes>
-                <TimeLinePage />
-              </ProtectedRoutes>
-            }
-          />
-          <Route
-            path="userinfo"
-            element={
-              <ProtectedRoutes>
-                <UserInfoPage />
               </ProtectedRoutes>
             }
           />
